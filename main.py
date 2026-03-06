@@ -22,10 +22,12 @@ app = FastAPI(title="GeoScribe API")
 
 @app.get("/health")
 async def health_check():
+    key = os.getenv("GROQ_API_KEY")
     return {
         "status": "healthy",
-        "groq_key_present": os.getenv("GROQ_API_KEY") is not None,
-        "frontend_url_present": os.getenv("FRONTEND_URL") is not None
+        "groq_key_configured": bool(key),
+        "groq_key_length": len(key) if key else 0,
+        "frontend_url": os.getenv("FRONTEND_URL")
     }
 
 MODEL_PATH = 'terrain_model.keras'
