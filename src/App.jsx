@@ -132,7 +132,7 @@ function Home() {
 
         try {
             // Use environment variable for API URL (defaults to localhost for dev)
-            const apiBase = import.meta.env.VITE_API_URL || "http://localhost:8000";
+            const apiBase = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/$/, "");
             let url = `${apiBase}/predict/`;
             if (gpsLocation) {
                 url += `?latitude=${gpsLocation.latitude}&longitude=${gpsLocation.longitude}`;
