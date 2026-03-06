@@ -1,0 +1,9 @@
+# Ignore backend files during Vercel frontend build
+main.py
+requirements.txt
+render.yaml
+terrain_model.keras
+terrain_model.h5
+class_names.json
+final_year_project.ipynb
+__pycache__/
