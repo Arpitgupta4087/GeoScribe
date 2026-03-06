@@ -1,0 +1,10 @@
+fastapi==0.115.12
+uvicorn==0.37.0
+python-multipart==0.0.20
+python-dotenv==1.1.1
+tensorflow==2.20.0
+numpy==2.2.6
+Pillow==11.3.0
+langchain-groq==0.3.2
+langchain-core==0.3.56
+pydantic==2.11.1
