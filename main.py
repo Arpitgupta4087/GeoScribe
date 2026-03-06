@@ -68,26 +68,21 @@ try:
 except Exception as e:
     print(f"❌ Critical Error during model loading: {e}")
 
-origins = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-]
-
-# Allow the production frontend URL if set
-frontend_url = os.getenv("FRONTEND_URL")
-if frontend_url:
-    # Add the URL as provided
-    origins.append(frontend_url)
-    # Also add without trailing slash just in case
-    if frontend_url.endswith("/"):
-        origins.append(frontend_url[:-1])
+# Permissive CORS for deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins to unblock the user
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def log_origin(request, call_next):
+    origin = request.headers.get("origin")
+    if origin:
+        print(f"🌐 Request from Origin: {origin}")
+    return await call_next(request)
 
 # AI Setup
 class TerrainAnalysis(BaseModel):
