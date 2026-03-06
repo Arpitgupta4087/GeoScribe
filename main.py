@@ -76,7 +76,11 @@ origins = [
 # Allow the production frontend URL if set
 frontend_url = os.getenv("FRONTEND_URL")
 if frontend_url:
+    # Add the URL as provided
     origins.append(frontend_url)
+    # Also add without trailing slash just in case
+    if frontend_url.endswith("/"):
+        origins.append(frontend_url[:-1])
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
