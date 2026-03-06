@@ -318,18 +318,18 @@ function Home() {
                         {/* Results Presentation */}
                         {result && !isLoading && (
                             <div className="animate-slide-up space-y-6">
-                                <div className="flex items-center gap-4 p-4 rounded-xl bg-surface-800/50 border border-surface-700">
-                                    <img src={image} alt="Thumbnail" className="w-16 h-16 rounded-lg object-cover border border-surface-600" />
-                                    <div>
-                                        <p className="text-sm text-surface-400 mb-1">Classification Result</p>
-                                        <p className="text-xl font-bold text-white flex items-center gap-2">
-                                            <span className="w-2.5 h-2.5 rounded-full bg-brand-500 animate-pulse" />
+                                <div className="flex flex-col xs:flex-row items-center gap-3 sm:gap-4 p-4 rounded-xl bg-surface-800/50 border border-surface-700">
+                                    <img src={image} alt="Thumbnail" className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-cover border border-surface-600 shrink-0" />
+                                    <div className="flex-grow text-center xs:text-left">
+                                        <p className="text-xs sm:text-sm text-surface-400 mb-0.5 sm:mb-1">Classification Result</p>
+                                        <p className="text-lg sm:text-xl font-bold text-white flex items-center justify-center xs:justify-start gap-2">
+                                            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-500 animate-pulse" />
                                             {result.label}
                                         </p>
                                     </div>
-                                    <div className="ml-auto text-right">
-                                        <p className="text-sm text-surface-400 mb-1">Confidence</p>
-                                        <p className="text-lg font-mono font-semibold text-brand-400">{result.confidence}</p>
+                                    <div className="xs:ml-auto text-center xs:text-right border-t xs:border-t-0 border-surface-700/50 pt-2 xs:pt-0 w-full xs:w-auto">
+                                        <p className="text-xs sm:text-sm text-surface-400 mb-0.5 sm:mb-1">Confidence</p>
+                                        <p className="text-base sm:text-lg font-mono font-semibold text-brand-400">{result.confidence}</p>
                                     </div>
                                 </div>
 
