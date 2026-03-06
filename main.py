@@ -20,6 +20,14 @@ from langchain_core.prompts import ChatPromptTemplate
 load_dotenv()
 app = FastAPI(title="GeoScribe API")
 
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "groq_key_present": os.getenv("GROQ_API_KEY") is not None,
+        "frontend_url_present": os.getenv("FRONTEND_URL") is not None
+    }
+
 MODEL_PATH = 'terrain_model.keras'
 CLASS_NAMES_PATH = 'class_names.json'
 IMG_HEIGHT = 120
