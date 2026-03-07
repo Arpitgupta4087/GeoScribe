@@ -30,10 +30,10 @@ async def health_check():
         "frontend_url": os.getenv("FRONTEND_URL")
     }
 
-MODEL_PATH = 'terrain_classifier.keras'
+MODEL_PATH = 'terrain_model.keras'
 CLASS_NAMES_PATH = 'class_names.json'
-IMG_HEIGHT = 224
-IMG_WIDTH = 224
+IMG_HEIGHT = 120
+IMG_WIDTH = 120
 NUM_CLASSES = 9
 
 def create_full_model():
