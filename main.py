@@ -154,7 +154,7 @@ def predict_image(image_bytes):
         img_array = tf.expand_dims(img_array, 0)
 
         predictions = model.predict(img_array, verbose=0)
-        score = predictions[0]
+        score = tf.nn.softmax(predictions[0])
 
         predicted_class_index = np.argmax(score)
         predicted_class = class_names[predicted_class_index]
