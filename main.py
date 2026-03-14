@@ -30,18 +30,44 @@ async def health_check():
         "frontend_url": os.getenv("FRONTEND_URL")
     }
 
-MODEL_PATH = 'terrain_classifier.keras'
+MODEL_PATH = 'terrain_model.keras'
 CLASS_NAMES_PATH = 'class_names.json'
-IMG_HEIGHT = 224
-IMG_WIDTH = 224
+IMG_HEIGHT = 120
+IMG_WIDTH = 120
 NUM_CLASSES = 9
+
+def create_full_model():
+    data_augmentation_layers = keras.Sequential([
+        layers.RandomFlip("horizontal_and_vertical", input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)),
+        layers.RandomRotation(0.2),
+        layers.RandomZoom(0.2),
+        layers.RandomContrast(0.2),
+    ], name="sequential_6")
+
+    model = keras.Sequential([
+        data_augmentation_layers,
+        layers.Conv2D(16, 3, activation='relu', padding='same', input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)),
+        layers.MaxPooling2D(),
+        layers.Conv2D(32, 3, activation='relu', padding='same'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(64, 3, activation='relu', padding='same'),
+        layers.MaxPooling2D(),
+        layers.GlobalAveragePooling2D(),
+        layers.Dropout(0.3),
+        layers.Dense(64, activation='relu'),
+        layers.Dense(NUM_CLASSES, activation='softmax')
+    ], name="sequential_7")
+
+    return model
 
 model = None
 class_names = []
 model_loaded = False
 try:
     if os.path.exists(MODEL_PATH) and os.path.exists(CLASS_NAMES_PATH):
-        model = tf.keras.models.load_model(MODEL_PATH)
+        model = create_full_model()
+        model.load_weights(MODEL_PATH)
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         with open(CLASS_NAMES_PATH, 'r') as f:
             class_names = json.load(f)
         model_loaded = True
